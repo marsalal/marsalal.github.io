@@ -107,10 +107,14 @@ a:hover {
     border-top: var(--border-width) solid var(--accent);
 }
 
-.justified{
+.justified { 
     text-align: justify;
 }
 
 footer {
     border-bottom: var(--border-width) solid var(--accent);
+}
+
+.inline-block{ 
+    display: inline-block;
 }
