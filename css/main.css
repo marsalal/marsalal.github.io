@@ -118,3 +118,31 @@ footer {
 .inline-block{ 
     display: inline-block;
 }
+
+div.content table th{
+    text-align: center;
+}
+
+div.content table td, div.content table th{
+    padding: 0 .5em;
+    border: #212121 1px solid;
+}
+
+
+/*image collage*/
+.content .column {
+    float: left;
+    width: 50%;
+    padding: 10px;
+  }
+  
+  .content .column img {
+    margin-top: 12px;
+  }
+  
+  /* Clear floats after the columns */
+  .content  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
