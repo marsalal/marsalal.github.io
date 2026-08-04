@@ -1,0 +1,66 @@
+---
+import { ArrowRight, BookOpen, UserRound } from '@lucide/astro';
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PostCard from '../components/PostCard.astro';
+import SearchPanel from '../components/SearchPanel.vue';
+import { allTags, formatDate, publishedPosts, readingTime } from '../utils/content';
+
+const posts = publishedPosts(await getCollection('blog'));
+const featured = posts.filter((post) => post.data.featured).slice(0, 2);
+const selected = featured.length === 2 ? featured : posts.slice(0, 2);
+const tags = allTags(posts);
+const searchPosts = posts.map((post) => ({
+  id: post.id,
+  title: post.data.title,
+  description: post.data.description,
+  tags: post.data.tags,
+  date: formatDate(post.data.date),
+  minutes: readingTime(post.body),
+}));
+---
+
+<BaseLayout>
+  <section class="hero">
+    <div class="shell hero-grid">
+      <div>
+        <span class="eyebrow">SOFTWARE ENGINEER · TECH LEAD</span>
+        <h1>Building reliable systems—and sharing what I learn<span>.</span></h1>
+        <p class="hero-copy">I’m Marco, a software engineer focused on resilient systems, pragmatic architecture, and helping teams do their best work. This is where I write down the lessons worth carrying forward.</p>
+        <div class="hero-actions">
+          <a class="button primary" href="#selected-writing"><BookOpen size={19} /> Read the latest</a>
+          <a class="button" href="/about/"><UserRound size={19} /> About me</a>
+        </div>
+      </div>
+      <aside class="profile-card" aria-label="About Marco">
+        <img class="profile-photo" src="/me_profile.jpeg" alt="Marco Salazar overlooking a city" width="500" height="500" />
+        <div class="profile-status"><span class="status-dot"></span> Costa Rica · Building, leading, learning</div>
+        <div class="profile-facts">
+          <div><strong>12+ years</strong><span>Experience</span></div>
+          <div><strong>.NET</strong><span>Core craft</span></div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section" id="selected-writing">
+    <div class="shell">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">SELECTED WRITING</span>
+          <h2>Ideas that hold up in practice.</h2>
+        </div>
+        <a class="text-link" href="/post/">All articles <ArrowRight size={17} /></a>
+      </div>
+      <div class="post-grid">
+        {selected.map((post) => <PostCard post={post} featured />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="shell">
+      <SearchPanel posts={searchPosts} tags={tags} client:load />
+    </div>
+  </section>
+</BaseLayout>

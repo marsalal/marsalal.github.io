@@ -1,0 +1,24 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { allTags, publishedPosts, tagSlug } from '../../utils/content';
+
+const posts = publishedPosts(await getCollection('blog'));
+const tags = allTags(posts).map((tag) => ({ tag, count: posts.filter((post) => post.data.tags.includes(tag)).length }));
+---
+
+<BaseLayout title="Tags" description="Browse Marco Salazar's writing by subject.">
+  <header class="page-hero shell">
+    <span class="eyebrow">TAGS</span>
+    <h1>Follow the thread that interests you.</h1>
+    <p>Browse articles across software development, C#, personal reflections, running, and more.</p>
+  </header>
+  <section class="shell tags-grid">
+    {tags.map(({ tag, count }) => (
+      <a class="tag-card" href={`/tags/${tagSlug(tag)}/`}>
+        <span>{count} {count === 1 ? 'article' : 'articles'}</span>
+        <strong>{tag}</strong>
+      </a>
+    ))}
+  </section>
+</BaseLayout>

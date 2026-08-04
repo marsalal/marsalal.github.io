@@ -1,0 +1,75 @@
+---
+title: "2021 Highlights"
+description: "A candid look back at the challenges, relationships, career growth, and running moments that shaped 2021."
+date: 2022-01-07
+tags: ["personal", "insight"]
+draft: false
+featured: false
+---
+
+This 2021 year has been both special and somehow bitter for me, which I guess its something that most of you could relate. I've always believe that not all the time you can have good times and good experiences, even if it happens for a long time eventually something wont come out as you expect and you need to accept it. So, lets start with what went bad/not-expected/dissapointing things
+
+## The bad things
+
+
+| Month       | What sucked?|
+| ----------- | ----------- |
+| January     | Covid still making trouble |
+| February    | Started to feel distanced with in-law family  |
+| March       | Trouble to accept things that I cannot control in my life and to debate if I need to take action or not  |
+| April       | My parents move to their new home |
+| May         | Rincon de la vieja 21k trail race was cancelled   |
+| June        | Knee injured because I felt in a track  workout   |
+| July        |         |
+| August      |         |
+| September   |  Eurotrip got cancelled because of covid        |
+| October     |  Found out about my brother;s marriage issues   |
+| November    |          |
+| December    |  Feel unapreciatted at work, feel like wasting my time |
+
+
+
+
+## The good things
+
+
+| Month       | What rocked?|
+| ----------- | ----------- |
+| January     | My father-in-law found out he does not have cancer but needs to keep an eye. Started new job at VerraMobility |
+| February    | 9 year wedding aniversary. Started to trail run again after few years being out! |
+| March       | Decided to invest with Cata in land and develop a small Airbnb  |
+| April       | Parents got covid vaccine. They moved to their new home  |
+| May         | Guanacaste trip! Rincon and Tamarindo        |
+| June        | Promoted at work to be Development Lead |
+| July        | Visited my brother for the first time in 3 years, met my sister-in-law. Got covid vaccine |
+| August      |         |
+| September   |         |
+| October     | Ran Chicago marathon, new PR. 3:18:45. Bye bye beard  |
+| November    | Turned 35!        |
+| December    | Accepted things and took control of what I can. Recovered my relationship with my in-law family |
+
+## 2021 in photos!
+
+
+<div class="row">
+  <div class="column">
+    <img src="/images/2021/July2.jpg" alt="2021 highlight" style="width:100%">
+    <img src="/images/2021/July3.JPG" alt="2021 highlight" style="width:100%">
+    <img src="/images/2021/may.jpg" alt="2021 highlight" style="width:100%">
+    <img src="/images/2021/may3.jpg" alt="2021 highlight" style="width:100%">
+    <img src="/images/2021/may2.jpg" alt="2021 highlight" style="width:100%">
+    <img src="/images/2021/Oct2.jpg" alt="2021 running highlight" style="width:100%">
+  </div>
+  <div class="column">
+    <img src="/images/2021/Feb.jpg" alt="2021 highlight" style="width:100%">
+    <img src="/images/2021/Jan.jpg" alt="2021 highlight" style="width:100%">
+    <img src="/images/2021/July.jpg" alt="2021 highlight" style="width:100%">
+    <img src="/images/2021/Dic2.jpg" alt="2021 highlight" style="width:100%">
+  </div>
+  <div class="column">
+    <img src="/images/2021/Oct-2021.jpg" alt="2021 Chicago Marathon highlight" style="width:100%">
+    <img src="/images/2021/april.jpg" alt="2021 highlight" style="width:100%">
+    <img src="/images/2021/Oct4.jpg" alt="2021 running highlight" style="width:100%">
+    <img src="/images/2021/Nov2.JPG" alt="2021 highlight" style="width:100%">
+  </div>
+</div>

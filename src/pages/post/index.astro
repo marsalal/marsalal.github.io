@@ -1,0 +1,34 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+import SearchPanel from '../../components/SearchPanel.vue';
+import { allTags, formatDate, publishedPosts, readingTime } from '../../utils/content';
+
+const posts = publishedPosts(await getCollection('blog'));
+const tags = allTags(posts);
+const searchPosts = posts.map((post) => ({
+  id: post.id,
+  title: post.data.title,
+  description: post.data.description,
+  tags: post.data.tags,
+  date: formatDate(post.data.date),
+  minutes: readingTime(post.body),
+}));
+---
+
+<BaseLayout title="Writing" description="Articles by Marco Salazar about software engineering, resilient systems, leadership, running, and continuous learning.">
+  <header class="page-hero shell">
+    <span class="eyebrow">WRITING</span>
+    <h1>Notes from building software and leading teams.</h1>
+    <p>Engineering practices, hard-earned lessons, and occasional reflections from outside the code.</p>
+  </header>
+  <section class="section">
+    <div class="shell post-grid">
+      {posts.map((post) => <PostCard post={post} />)}
+    </div>
+  </section>
+  <section class="section">
+    <div class="shell"><SearchPanel posts={searchPosts} tags={tags} client:load /></div>
+  </section>
+</BaseLayout>

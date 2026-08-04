@@ -1,0 +1,26 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+import { allTags, publishedPosts, tagSlug } from '../../utils/content';
+
+export async function getStaticPaths() {
+  const posts = publishedPosts(await getCollection('blog'));
+  return allTags(posts).map((tag) => ({
+    params: { tag: tagSlug(tag) },
+    props: { tag, posts: posts.filter((post) => post.data.tags.includes(tag)) },
+  }));
+}
+
+interface Props { tag: string; posts: CollectionEntry<'blog'>[] }
+const { tag, posts } = Astro.props;
+---
+
+<BaseLayout title={`${tag} articles`} description={`Articles by Marco Salazar tagged ${tag}.`}>
+  <header class="page-hero shell">
+    <span class="eyebrow">TAG</span>
+    <h1>{tag}</h1>
+    <p>{posts.length} {posts.length === 1 ? 'article' : 'articles'} in this collection.</p>
+  </header>
+  <section class="section"><div class="shell post-grid">{posts.map((post) => <PostCard post={post} />)}</div></section>
+</BaseLayout>

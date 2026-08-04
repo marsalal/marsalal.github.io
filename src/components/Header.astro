@@ -1,0 +1,47 @@
+---
+import { Mail, Menu, PanelTopClose } from '@lucide/astro';
+
+const currentPath = Astro.url.pathname;
+const isActive = (path: string) => path === '/' ? currentPath === '/' : currentPath.startsWith(path);
+---
+
+<header class="site-header" data-header>
+  <div class="shell header-inner">
+    <a class="brand" href="/" aria-label="Marco Salazar, home">
+      <span class="brand-mark">MS</span>
+      <span class="brand-name">Marco Salazar</span>
+    </a>
+
+    <button class="menu-button" type="button" aria-label="Open navigation" aria-expanded="false" data-menu-button>
+      <Menu class="menu-open" size={21} aria-hidden="true" />
+      <PanelTopClose class="menu-close" size={21} aria-hidden="true" />
+    </button>
+
+    <nav class="primary-nav" aria-label="Primary navigation" data-menu>
+      <div class="nav-pages">
+        <a class:list={{ active: isActive('/post') }} href="/post/">Writing</a>
+        <a class:list={{ active: isActive('/tags') }} href="/tags/">Tags</a>
+        <a class:list={{ active: isActive('/about') }} href="/about/">About</a>
+      </div>
+      <div class="nav-socials" aria-label="Social links">
+        <a href="mailto:marcosalazar16@gmail.com" aria-label="Email" title="Email"><Mail size={18} aria-hidden="true" /><span>Email</span></a>
+        <a href="https://github.com/marsalal/" aria-label="GitHub" title="GitHub" target="_blank" rel="noreferrer"><i class="brand-icon" aria-hidden="true">GH</i><span>GitHub</span></a>
+        <a href="https://www.linkedin.com/in/marco-salazar-a8366515/" aria-label="LinkedIn" title="LinkedIn" target="_blank" rel="noreferrer"><i class="brand-icon linkedin" aria-hidden="true">in</i><span>LinkedIn</span></a>
+        <a href="https://stackoverflow.com/users/600799/marsalal1014" aria-label="Stack Overflow" title="Stack Overflow" target="_blank" rel="noreferrer">
+          <span class="stackoverflow-icon" aria-hidden="true">▰</span>
+          <span>Stack Overflow</span>
+        </a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<script is:inline>
+  const button = document.querySelector('[data-menu-button]');
+  const menu = document.querySelector('[data-menu]');
+  button?.addEventListener('click', () => {
+    const expanded = button.getAttribute('aria-expanded') === 'true';
+    button.setAttribute('aria-expanded', String(!expanded));
+    menu?.classList.toggle('open', !expanded);
+  });
+</script>
