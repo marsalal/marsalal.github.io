@@ -84,10 +84,12 @@
   .nav-socials a { padding: 9px; }
   .nav-pages a:hover, .nav-socials a:hover, .nav-pages a.active { color: var(--text); background: rgba(255,255,255,.045); }
   .nav-pages a.active::after { position: absolute; right: 12px; bottom: 2px; left: 12px; height: 2px; content: ""; background: var(--green); }
-  .nav-socials span:not(.stackoverflow-icon) { display: none; }
+  .nav-socials a > span { display: none; }
   .brand-icon { display: inline-grid; width: 19px; height: 19px; place-items: center; border: 1px solid currentColor; border-radius: 50%; color: var(--green); font-family: ui-monospace, monospace; font-size: 8px; font-style: normal; font-weight: 850; letter-spacing: -.05em; }
   .brand-icon.linkedin { border-radius: 3px; font-size: 11px; }
-  .stackoverflow-icon { display: inline-grid; width: 18px; height: 18px; place-items: center; transform: rotate(-12deg); color: var(--green); font-size: 17px; }
+  .social-brand-icon { width: 19px; height: 19px; flex: none; fill: currentColor; }
+  .github-icon { color: var(--text); }
+  .stackoverflow-icon { width: 20px; height: 20px; color: #f58025; }
   .menu-button { display: none; margin-left: auto; border: 1px solid var(--line-strong); border-radius: 9px; background: var(--surface); color: var(--text); padding: 8px; }
   .menu-close { display: none; }
   .menu-button[aria-expanded="true"] .menu-open { display: none; }
@@ -229,7 +231,7 @@
   .nav-pages, .nav-socials { align-items: stretch; flex-direction: column; }
   .nav-socials { display: grid; grid-template-columns: repeat(2, 1fr); margin-top: 13px; padding-top: 13px; border-top: 1px solid var(--line); }
   .nav-socials a { padding: 10px 12px; }
-  .nav-socials span:not(.stackoverflow-icon) { display: inline; }
+  .nav-socials a > span { display: inline; }
   .hero-grid { grid-template-columns: 1fr; gap: 50px; }
   .profile-card { max-width: 420px; }
   .search-heading { grid-template-columns: 1fr; align-items: stretch; }
