@@ -1,8 +1,9 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { yearsOfExperience } from '../utils/profile';
 ---
 
-<BaseLayout title="About" description="Meet Marco Salazar, a software engineer and tech lead with more than twelve years of experience building web, mobile, and backend systems.">
+<BaseLayout title="About" description={`Meet Marco Salazar, a software engineer and tech lead with ${yearsOfExperience}+ years of experience building web, mobile, and backend systems.`}>
   <header class="page-hero shell">
     <span class="eyebrow">ABOUT</span>
     <h1>Engineer, team builder, and relentlessly curious human.</h1>
@@ -17,7 +18,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       </div>
     </aside>
     <section class="about-copy">
-      <p>I’m a software developer with more than 12 years of experience across mobile, web, and backend applications. Most of that journey has centered on backend systems, where C# and .NET have become my core specialties.</p>
+      <p>I’m a software developer with {yearsOfExperience}+ years of experience across mobile, web, and backend applications. Most of that journey has centered on backend systems, where C# and .NET have become my core specialties.</p>
       <p>I’ve also worked as a technical lead for small and multi-region teams with a wide range of experience levels. My goal is always the same: help every person increase their impact while moving the team toward a shared outcome.</p>
       <p>New challenges keep me moving—in engineering and everywhere else. I’m a dedicated husband, amateur pitmaster, passionate home cook, traveler, and runner who is always looking for the next improvement.</p>
       <div class="about-pillars">
