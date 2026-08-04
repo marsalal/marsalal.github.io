@@ -1,0 +1,142 @@
+---
+import { ChevronLeft, ChevronRight, Maximize2, X } from '@lucide/astro';
+
+interface Photo {
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+}
+
+interface Props {
+  photos: Photo[];
+  label: string;
+}
+
+const { photos, label } = Astro.props;
+---
+
+<div class="gallery-root" data-photo-gallery-root>
+  <div class="photo-gallery" role="group" aria-label={label}>
+    {photos.map((photo, index) => (
+      <button
+        class="photo-tile"
+        type="button"
+        aria-label={`Open photo: ${photo.alt}`}
+        data-gallery-item
+        data-gallery-index={index}
+        data-gallery-src={photo.src}
+        data-gallery-alt={photo.alt}
+      >
+        <img
+          src={photo.src}
+          alt={photo.alt}
+          width={photo.width}
+          height={photo.height}
+          loading="lazy"
+          decoding="async"
+        />
+        <span class="photo-zoom" aria-hidden="true"><Maximize2 size={16} /></span>
+      </button>
+    ))}
+  </div>
+
+  <dialog class="photo-lightbox" aria-label={label} data-photo-lightbox>
+    <button class="lightbox-close" type="button" aria-label="Close photo viewer" data-gallery-close><X size={22} /></button>
+    <button class="lightbox-nav previous" type="button" aria-label="Previous photo" data-gallery-previous><ChevronLeft size={28} /></button>
+    <figure>
+      <img alt="" data-gallery-image />
+      <figcaption>
+        <span data-gallery-caption></span>
+        <span class="photo-count" data-gallery-count></span>
+      </figcaption>
+    </figure>
+    <button class="lightbox-nav next" type="button" aria-label="Next photo" data-gallery-next><ChevronRight size={28} /></button>
+  </dialog>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-photo-gallery-root]').forEach((root) => {
+    const items = [...root.querySelectorAll<HTMLButtonElement>('[data-gallery-item]')];
+    const dialog = root.querySelector<HTMLDialogElement>('[data-photo-lightbox]');
+    const image = root.querySelector<HTMLImageElement>('[data-gallery-image]');
+    const caption = root.querySelector<HTMLElement>('[data-gallery-caption]');
+    const count = root.querySelector<HTMLElement>('[data-gallery-count]');
+    const close = root.querySelector<HTMLButtonElement>('[data-gallery-close]');
+    const previous = root.querySelector<HTMLButtonElement>('[data-gallery-previous]');
+    const next = root.querySelector<HTMLButtonElement>('[data-gallery-next]');
+
+    if (!items.length || !dialog || !image || !caption || !count || !close || !previous || !next) return;
+
+    let currentIndex = 0;
+
+    const showPhoto = (index: number) => {
+      currentIndex = (index + items.length) % items.length;
+      const item = items[currentIndex];
+      image.src = item.dataset.gallerySrc ?? '';
+      image.alt = item.dataset.galleryAlt ?? '';
+      caption.textContent = image.alt;
+      count.textContent = `${currentIndex + 1} / ${items.length}`;
+    };
+
+    items.forEach((item, index) => {
+      item.addEventListener('click', () => {
+        showPhoto(index);
+        if (typeof dialog.showModal === 'function') dialog.showModal();
+        else window.location.href = item.dataset.gallerySrc ?? '';
+      });
+    });
+
+    close.addEventListener('click', () => dialog.close());
+    previous.addEventListener('click', () => showPhoto(currentIndex - 1));
+    next.addEventListener('click', () => showPhoto(currentIndex + 1));
+
+    dialog.addEventListener('click', (event) => {
+      if (event.target === dialog) dialog.close();
+    });
+
+    dialog.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowLeft') showPhoto(currentIndex - 1);
+      if (event.key === 'ArrowRight') showPhoto(currentIndex + 1);
+    });
+  });
+</script>
+
+<style>
+  .gallery-root { margin-top: 1.6rem; font-family: Inter, ui-sans-serif, sans-serif; }
+  .photo-gallery { columns: 3 220px; column-gap: 12px; }
+  .photo-tile { position: relative; display: block; width: 100%; margin: 0 0 12px; padding: 0; break-inside: avoid; border: 0; border-radius: 10px; background: var(--surface); cursor: zoom-in; overflow: hidden; }
+  .photo-tile img { width: 100%; height: auto; margin: 0; border: 1px solid var(--line-strong); border-radius: 10px; transition: transform .25s ease, filter .25s ease; }
+  .photo-zoom { position: absolute; right: 9px; bottom: 9px; display: grid; width: 32px; height: 32px; place-items: center; border: 1px solid rgba(255,255,255,.2); border-radius: 8px; background: rgba(4,11,20,.82); color: var(--text); opacity: 0; transform: translateY(5px); transition: opacity .2s ease, transform .2s ease; }
+  .photo-tile:hover img { filter: brightness(.88); transform: scale(1.018); }
+  .photo-tile:hover .photo-zoom, .photo-tile:focus-visible .photo-zoom { opacity: 1; transform: translateY(0); }
+  .photo-tile:focus-visible { outline: 2px solid var(--green); outline-offset: 3px; }
+
+  .photo-lightbox { width: min(1180px, calc(100vw - 32px)); max-width: none; height: min(860px, calc(100dvh - 32px)); max-height: none; padding: 20px; border: 1px solid var(--line-strong); border-radius: 16px; background: #040b14; color: var(--text); box-shadow: var(--shadow); }
+  .photo-lightbox[open] { display: grid; grid-template-columns: 52px minmax(0, 1fr) 52px; align-items: center; gap: 12px; }
+  .photo-lightbox::backdrop { background: rgba(1, 6, 12, .86); backdrop-filter: blur(8px); }
+  .photo-lightbox figure { display: grid; min-width: 0; height: 100%; place-items: center; align-content: center; gap: 12px; }
+  .photo-lightbox figure img { width: auto; max-width: 100%; height: auto; max-height: calc(100dvh - 130px); margin: 0; border-radius: 10px; object-fit: contain; }
+  .photo-lightbox figcaption { display: flex; width: 100%; justify-content: space-between; gap: 24px; color: var(--muted); font-size: 13px; }
+  .photo-count { flex: none; color: var(--muted-2); font-variant-numeric: tabular-nums; }
+  .lightbox-close, .lightbox-nav { display: grid; place-items: center; border: 1px solid var(--line-strong); background: var(--surface); color: var(--text); cursor: pointer; }
+  .lightbox-close { position: absolute; z-index: 1; top: 14px; right: 14px; width: 42px; height: 42px; border-radius: 10px; }
+  .lightbox-nav { width: 46px; height: 54px; border-radius: 10px; }
+  .lightbox-close:hover, .lightbox-nav:hover { border-color: var(--green); color: var(--green); }
+
+  @media (max-width: 680px) {
+    .photo-gallery { columns: 2 145px; gap: 9px; }
+    .photo-tile { margin-bottom: 9px; }
+    .photo-lightbox { padding: 12px; }
+    .photo-lightbox[open] { grid-template-columns: 1fr; align-content: center; }
+    .photo-lightbox figure { grid-row: 1; }
+    .photo-lightbox figcaption { padding: 0 48px 0 4px; }
+    .lightbox-nav { position: absolute; z-index: 1; top: 50%; width: 42px; height: 52px; transform: translateY(-50%); }
+    .lightbox-nav.previous { left: 10px; }
+    .lightbox-nav.next { right: 10px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .photo-tile img, .photo-zoom { transition: none; }
+  }
+</style>

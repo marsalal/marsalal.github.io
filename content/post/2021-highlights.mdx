@@ -7,6 +7,8 @@ draft: false
 featured: false
 ---
 
+import PhotoGallery from '../../src/components/PhotoGallery.astro';
+
 This 2021 year has been both special and somehow bitter for me, which I guess its something that most of you could relate. I've always believe that not all the time you can have good times and good experiences, even if it happens for a long time eventually something wont come out as you expect and you need to accept it. So, lets start with what went bad/not-expected/dissapointing things
 
 ## The bad things
@@ -50,26 +52,20 @@ This 2021 year has been both special and somehow bitter for me, which I guess it
 
 ## 2021 in photos!
 
-
-<div class="row">
-  <div class="column">
-    <img src="/images/2021/July2.jpg" alt="2021 highlight" style="width:100%">
-    <img src="/images/2021/July3.JPG" alt="2021 highlight" style="width:100%">
-    <img src="/images/2021/may.jpg" alt="2021 highlight" style="width:100%">
-    <img src="/images/2021/may3.jpg" alt="2021 highlight" style="width:100%">
-    <img src="/images/2021/may2.jpg" alt="2021 highlight" style="width:100%">
-    <img src="/images/2021/Oct2.jpg" alt="2021 running highlight" style="width:100%">
-  </div>
-  <div class="column">
-    <img src="/images/2021/Feb.jpg" alt="2021 highlight" style="width:100%">
-    <img src="/images/2021/Jan.jpg" alt="2021 highlight" style="width:100%">
-    <img src="/images/2021/July.jpg" alt="2021 highlight" style="width:100%">
-    <img src="/images/2021/Dic2.jpg" alt="2021 highlight" style="width:100%">
-  </div>
-  <div class="column">
-    <img src="/images/2021/Oct-2021.jpg" alt="2021 Chicago Marathon highlight" style="width:100%">
-    <img src="/images/2021/april.jpg" alt="2021 highlight" style="width:100%">
-    <img src="/images/2021/Oct4.jpg" alt="2021 running highlight" style="width:100%">
-    <img src="/images/2021/Nov2.JPG" alt="2021 highlight" style="width:100%">
-  </div>
-</div>
+<PhotoGallery
+  label="2021 highlights in photos"
+  photos={[
+    { src: '/images/2021/July2.jpg', alt: 'Marco visiting Washington, D.C. with his brother', width: 622, height: 829 },
+    { src: '/images/2021/July3.JPG', alt: 'Two runners getting ready beside a red car', width: 622, height: 829 },
+    { src: '/images/2021/may.jpg', alt: 'A cold beer overlooking the beach at sunset', width: 622, height: 829 },
+    { src: '/images/2021/may3.jpg', alt: 'French toast topped with berries after a morning run', width: 622, height: 829 },
+    { src: '/images/2021/may2.jpg', alt: 'A cozy cabin room with a lit fireplace', width: 622, height: 829 },
+    { src: '/images/2021/Oct2.jpg', alt: 'Marco running the 2021 Chicago Marathon', width: 553, height: 829 },
+    { src: '/images/2021/Feb.jpg', alt: 'A school mural celebrating work and education in Costa Rica', width: 293, height: 220 },
+    { src: '/images/2021/Jan.jpg', alt: 'Sunset over a beach in Costa Rica', width: 1105, height: 829 },
+    { src: '/images/2021/July.jpg', alt: 'Marco spending time with family', width: 394, height: 222 },
+    { src: '/images/2021/Dic2.jpg', alt: 'Family gathered together during the holidays', width: 272, height: 204 },
+    { src: '/images/2021/Oct-2021.jpg', alt: 'Visiting Cloud Gate in Chicago during marathon weekend', width: 1024, height: 768 },
+    { src: '/images/2021/april.jpg', alt: 'Trail running through the forest in Costa Rica', width: 622, height: 829 },
+  ]}
+/>
