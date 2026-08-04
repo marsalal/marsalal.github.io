@@ -1,0 +1,35 @@
+---
+import { ArrowUpRight, CalendarDays, Clock3 } from '@lucide/astro';
+import type { BlogPost } from '../utils/content';
+import { formatDate, readingTime, tagSlug } from '../utils/content';
+
+interface Props {
+  post: BlogPost;
+  featured?: boolean;
+}
+
+const { post, featured = false } = Astro.props;
+const minutes = readingTime(post.body);
+---
+
+<article class:list={['post-card', { featured }]} data-pagefind-ignore>
+  <a class="post-art" href={`/post/${post.id}/`} aria-label={`Read ${post.data.title}`}>
+    <span class="art-grid"></span>
+    <span class="art-window">
+      <span></span><span></span><span></span>
+      <strong>{post.id === 'retry-policy' ? '↻' : post.id.includes('highlights') ? '✦' : '</>'}</strong>
+    </span>
+  </a>
+  <div class="post-card-body">
+    <div class="tag-row">
+      {post.data.tags.map((tag) => <a class="tag" href={`/tags/${tagSlug(tag)}/`}>{tag}</a>)}
+    </div>
+    <h3><a href={`/post/${post.id}/`}>{post.data.title}</a></h3>
+    <p>{post.data.description}</p>
+    <div class="post-meta">
+      <span><CalendarDays size={15} aria-hidden="true" /> {formatDate(post.data.date)}</span>
+      <span><Clock3 size={15} aria-hidden="true" /> {minutes} min read</span>
+      <a class="post-arrow" href={`/post/${post.id}/`} aria-label={`Read ${post.data.title}`}><ArrowUpRight size={19} /></a>
+    </div>
+  </div>
+</article>

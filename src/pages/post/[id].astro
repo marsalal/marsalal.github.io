@@ -1,0 +1,59 @@
+---
+import { CalendarDays, Clock3 } from '@lucide/astro';
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { formatDate, publishedPosts, readingTime, tagSlug } from '../../utils/content';
+
+export async function getStaticPaths() {
+  const posts = publishedPosts(await getCollection('blog'));
+  return posts.map((post) => ({ params: { id: post.id }, props: { post } }));
+}
+
+interface Props { post: CollectionEntry<'blog'> }
+const { post } = Astro.props;
+const { Content } = await render(post);
+const minutes = readingTime(post.body);
+const canonical = new URL(`/post/${post.id}/`, Astro.site).toString();
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: post.data.title,
+  description: post.data.description,
+  datePublished: post.data.date.toISOString(),
+  author: { '@type': 'Person', name: 'Marco Salazar', url: new URL('/about/', Astro.site).toString() },
+  mainEntityOfPage: canonical,
+};
+---
+
+<BaseLayout title={post.data.title} description={post.data.description} type="article" publishedTime={post.data.date}>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(schema)} />
+  <article>
+    <header class="article-header">
+      <div class="article-shell" data-pagefind-body>
+        <div class="tag-row" data-pagefind-filter="tag">
+          {post.data.tags.map((tag) => <a class="tag" href={`/tags/${tagSlug(tag)}/`}>{tag}</a>)}
+        </div>
+        <h1 data-pagefind-meta="title">{post.data.title}</h1>
+        <p class="article-description" data-pagefind-meta="description">{post.data.description}</p>
+        <div class="article-byline">
+          <span><CalendarDays size={16} /> {formatDate(post.data.date)}</span>
+          <span><Clock3 size={16} /> {minutes} min read</span>
+          <span>By Marco Salazar</span>
+        </div>
+      </div>
+    </header>
+    <div class="article-shell">
+      <div class="article-content" data-pagefind-body>
+        <Content />
+      </div>
+      <footer class="article-footer">
+        <strong>Thanks for reading.</strong>
+        <p>I write about reliable software, leadership, and lessons learned along the way. Share this article on LinkedIn if it was useful.</p>
+        <div class="hero-actions">
+          <a class="button primary" href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(canonical)}`} target="_blank" rel="noreferrer">Share on LinkedIn</a>
+          <a class="button" href="/post/">More writing</a>
+        </div>
+      </footer>
+    </div>
+  </article>
+</BaseLayout>
