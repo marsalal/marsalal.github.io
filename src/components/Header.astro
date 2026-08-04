@@ -19,8 +19,6 @@ const isActive = (path: string) => path === '/' ? currentPath === '/' : currentP
 
     <nav class="primary-nav" aria-label="Primary navigation" data-menu>
       <div class="nav-pages">
-        <a class:list={{ active: isActive('/post') }} href="/post/">Writing</a>
-        <a class:list={{ active: isActive('/tags') }} href="/tags/">Tags</a>
         <a class:list={{ active: isActive('/about') }} href="/about/">About</a>
       </div>
       <div class="nav-socials" aria-label="Social links">
