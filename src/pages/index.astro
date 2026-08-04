@@ -5,6 +5,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import PostCard from '../components/PostCard.astro';
 import SearchPanel from '../components/SearchPanel.vue';
 import { allTags, formatDate, publishedPosts, readingTime } from '../utils/content';
+import { yearsOfExperience } from '../utils/profile';
 
 const posts = publishedPosts(await getCollection('blog'));
 const featured = posts.filter((post) => post.data.featured).slice(0, 2);
@@ -36,7 +37,7 @@ const searchPosts = posts.map((post) => ({
         <img class="profile-photo" src="/me_profile.jpeg" alt="Marco Salazar overlooking a city" width="500" height="500" />
         <div class="profile-status"><span class="status-dot"></span> Costa Rica · Building, leading, learning</div>
         <div class="profile-facts">
-          <div><strong>12+ years</strong><span>Experience</span></div>
+          <div><strong>{yearsOfExperience}+ years</strong><span>Experience</span></div>
           <div><strong>.NET</strong><span>Core craft</span></div>
         </div>
       </aside>
