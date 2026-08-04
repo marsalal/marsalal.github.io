@@ -33,7 +33,7 @@ pnpm build
 
 ## Content
 
-Published articles live in `src/content/blog`. Each Markdown or MDX entry uses this front matter:
+Published articles live in `content/post`. Each Markdown or MDX entry uses this front matter:
 
 ```yaml
 ---
@@ -48,11 +48,13 @@ featured: false
 
 Existing article routes remain under `/post/<file-name>/`.
 
-### Existing `about_me` authoring flow
+Images belong in `public/images` and are referenced from articles with an absolute path:
 
-For backwards compatibility, `marsalal/about_me` remains the content-authoring repository. A push to `about_me/content/post` on its `master` branch synchronizes articles and media into this repository. The sync commit then triggers the Pages deployment below.
+```md
+![Useful alternative text](/images/example.jpg)
+```
 
-New code and design changes should be made directly in this repository. New articles may continue to be written in `about_me/content/post`.
+To publish an article, add or edit its file here and merge the change into `main`. No cross-repository synchronization or custom access token is required.
 
 ## Deployment
 
@@ -63,5 +65,7 @@ New code and design changes should be made directly in this repository. New arti
 3. Generate the Pagefind search index.
 4. Upload the static artifact.
 5. Deploy it through GitHub Pages.
+
+The workflow uses GitHub's repository-scoped `GITHUB_TOKEN` and Pages identity token. There are no long-lived deployment secrets.
 
 In **Settings → Pages**, the publishing source must be set to **GitHub Actions**.
