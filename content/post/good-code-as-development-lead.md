@@ -1,103 +1,91 @@
 ---
 title: "Becoming a Development Lead changed how I define good code"
-description: "What moving from individual contributor to Development Lead taught me about maintainability, feedback, team decisions, and engineering impact."
+description: "What I learned when my job stopped being only about the code I could write and became more about helping a team make better decisions."
 date: 2026-08-05
 tags: ["development", "leadership", "career", "software-engineering"]
 draft: false
 featured: true
 ---
 
-For a long time, I measured my growth as a software developer through the code I could produce.
+For a long time, I measured my growth as a software developer by the code I was able to write.
 
-Could I solve a difficult problem? Could I learn a framework quickly? Could I deliver a feature without needing much help? Those questions mattered, and they helped me become a stronger individual contributor.
+Could I solve a difficult problem? Could I learn a new framework? Could I finish a feature without asking for too much help?
 
-Then I became a Development Lead, and my definition of good engineering began to change.
+Those things mattered to me and, to be fair, they helped me grow. But when I became a Development Lead, I realized that being good at my own work was not enough anymore.
 
-The code still mattered. But my impact could no longer be limited to the code I personally wrote. I had to think about whether the team understood a decision, whether another developer could safely maintain the solution, and whether our way of working helped people deliver consistently.
+My impact could not depend only on how many tickets I completed or how much code I pushed. I also had to think about the people around me and whether the team could continue moving when I was not there.
 
-## Situation: the same technical skills, a different responsibility
+## Situation: a promotion changed more than my title
 
-I joined Verra Mobility in January 2021 and was promoted to Development Lead later that year. The transition was exciting, but it also exposed a gap in how I thought about my role.
+I joined Verra Mobility in January 2021 and was promoted to Development Lead a few months later. I was happy and proud about it, but the new role also made me question how I was measuring success.
 
-As an individual contributor, completing my assigned work could be a reasonable definition of success. As a lead, finishing my own tasks while the rest of the team was blocked, uncertain, or accumulating avoidable complexity was not enough.
+As an individual contributor, I could finish my tasks and feel that I had done my job. As a lead, I could finish everything assigned to me and still fail the team if other developers were blocked, confused or depending on me for every decision.
 
-I had to change how I interacted with teammates and how I evaluated technical work. A clever implementation that only one person understood was no longer automatically a good implementation. A pull request that worked but created confusion for the next developer carried a cost that would eventually be paid by the team.
+I also started seeing code differently. A clever solution that only one person could understand was not necessarily a good solution. It might work today, but someone else would have to maintain it tomorrow.
 
-## Task: improve the team's ability to make good decisions
+That is a cost we don't always see when the pull request is approved.
 
-My task was not to become the person with every answer. It was to help create an environment in which the team could reach good answers together.
+## Task: help the team make better decisions
 
-That meant balancing responsibilities that sometimes appeared to compete:
+At first, it is easy to think that a lead needs to have all the answers. I learned that this is not true, and trying to be that person can actually slow everybody down.
 
-- deliver software without sacrificing maintainability;
-- give direction without removing ownership;
-- review code thoroughly without becoming a bottleneck;
-- support learning while still meeting commitments;
-- make decisions while remaining open to being wrong.
+My responsibility was to help the team get to a good answer, not to make every decision myself.
 
-The hardest part was accepting that leadership is less visible than writing the final piece of code. Often, the best contribution is a question, a clear constraint, timely feedback, or the decision to let someone else lead the solution.
+That meant finding a balance between things that sometimes pull in different directions:
 
-## Action: optimize for clarity, feedback, and shared ownership
+- delivering software and keeping it maintainable;
+- giving direction and allowing people to own their work;
+- reviewing code carefully and not becoming a bottleneck;
+- meeting commitments and still making time to learn;
+- making a decision and accepting that I could be wrong.
 
-I started applying a principle I had learned as a developer: write code as if someone else will maintain it. As a lead, I expanded it:
+This was probably the biggest change for me. Sometimes my best contribution was not writing the solution. It was asking the right question or giving someone enough context to solve the problem themselves.
 
-> Build the team's practices as if someone else will need to make the next decision without you.
+## Action: change the way I worked with the team
 
-That changed several everyday behaviors.
+One principle had already helped me as a developer: always write code like someone else will be maintaining it.
 
-### I treated readability as an operational concern
+As a lead, I started applying that same idea beyond the code. Could the team make the next decision without me? Did they understand why we chose this design? Was important knowledge documented or did it live only in somebody's head?
 
-Readable code is not simply a style preference. It reduces the time needed to understand a system during a change or an incident. Clear names, focused responsibilities, useful tests, and straightforward control flow help the next developer act with confidence.
+### Readable code became more important
 
-This also made me more skeptical of unnecessary cleverness. The most sophisticated solution is not always the one with the most abstractions. Often, it is the solution whose tradeoffs are easiest to explain and whose behavior is easiest to verify.
+Readable code is not just about style. During a production issue or an urgent change, nobody wants to spend an hour trying to understand a clever abstraction.
 
-### I used code reviews to share context
+Clear names, small responsibilities, useful tests and simple control flow help the next developer work with confidence. I still appreciate a sophisticated solution, but I appreciate one that is easy to explain even more.
 
-A review should improve both the change and the team's shared understanding. Instead of treating every comment as a command, I learned to explain why something concerned me and to distinguish between a defect, a design question, and a personal preference.
+### Code reviews became conversations
 
-That creates room for a real technical conversation. It also helps the author carry the reasoning into future work instead of merely applying a correction once.
+I stopped looking at code reviews as a place to leave instructions. A good review should improve the code and also help both people understand the problem better.
 
-### I asked for feedback, not only gave it
+Instead of only saying what I wanted changed, I tried to explain why something worried me. Was it a bug? A maintenance concern? A design question? Or was it simply my personal preference?
 
-Becoming a lead did not eliminate my blind spots. It made them more consequential.
+That distinction matters. Not every comment needs to become a change, and the author may have a better solution than the one I had in mind.
 
-Asking teammates for feedback helped me understand when I was providing useful direction and when I was creating noise or taking too much ownership. Leadership requires enough confidence to make a decision and enough humility to revise it when new information appears.
+### I asked for feedback too
 
-### I made learning part of delivery
+Getting promoted did not remove my blind spots. If anything, it made them more important.
 
-Technology constantly changes, but learning cannot depend entirely on personal time. Pairing on unfamiliar work, discussing alternatives during reviews, documenting important decisions, and allowing developers to own meaningful problems turn delivery into a learning system.
+I needed feedback from my teammates to know if I was helping, creating noise or taking too much control. It is not always comfortable to ask, but it is difficult to improve if people don't feel they can tell you what is not working.
 
-This does not mean avoiding mistakes. It means creating feedback loops that make mistakes smaller, visible, and useful.
+### Learning became part of the work
 
-### I focused on outcomes instead of personal output
+Technology keeps changing, so learning cannot always be something we do after working hours. Pairing on a problem, talking about alternatives during a review and letting someone own a challenging task are all opportunities to learn while delivering something valuable.
 
-A lead can write a large amount of code and still leave the team dependent on them. That may look productive in the short term, but it creates a bottleneck.
+Of course, mistakes will happen. The goal is not to avoid every mistake. The goal is to make them small, learn from them and not repeat the same one forever.
 
-I began thinking more about questions such as:
+## Result: my definition of impact changed
 
-- Can the team move forward when I am unavailable?
-- Do people understand why we chose this design?
-- Are risks and tradeoffs visible early?
-- Is knowledge distributed or concentrated?
-- Does our process make the next change easier?
+I started paying less attention to my personal output and more attention to what the team was able to do.
 
-Those signals reveal more about engineering health than my personal commit count.
+Could they move forward when I was unavailable? Did everyone understand the tradeoffs behind a decision? Was knowledge shared across the team? Were we making the next change easier or adding more problems for later?
 
-## Result: my impact became less individual and more durable
+Those questions told me more than my number of commits ever could.
 
-The result was a change in how I recognized valuable work.
+This shift also made me a better developer. Explaining my reasoning forced me to challenge my own assumptions. Reviewing somebody else's approach showed me solutions I would not have considered. Delegating work exposed places where our documentation or architecture was not as clear as I thought.
 
-Good code was no longer only code that passed tests, performed well, or followed a pattern. It was code the team could understand, operate, challenge, and improve. Good leadership was not having the final word. It was helping the team develop the context and confidence to make sound decisions.
+The biggest lesson was that the most valuable thing a lead can build is not a solution that depends on them. It is a team that can continue solving problems without them.
 
-This shift also made me a better developer. Explaining tradeoffs forced me to examine my own assumptions. Reviewing another person's approach exposed me to solutions I would not have chosen. Delegating meaningful work revealed where documentation and architecture were unclear.
+If you are moving into a lead role, don't stop coding or learning the technical details. Just remember that those skills now have a bigger purpose. Use them to give people context, make tradeoffs visible and help the team build software they can understand and maintain together.
 
-Most importantly, I learned that the durable output of a lead is not a collection of personal solutions. It is a team that can keep solving problems.
-
-## What I would tell a new technical lead
-
-If you are moving into technical leadership, do not abandon coding or technical depth. Change the purpose they serve.
-
-Use your experience to make constraints visible, help others evaluate tradeoffs, and protect the long-term health of the system. Measure your contribution not only by what you finish, but by how much clarity and capability remain after the work is done.
-
-The transition from developer to lead is not a move away from software engineering. It is an expansion of it—from designing code to designing the conditions in which good code can be created by an entire team.
+Becoming a lead did not move me away from software development. It changed the scale of the problem, from thinking only about the code to thinking about the environment where good code can be created.
 
