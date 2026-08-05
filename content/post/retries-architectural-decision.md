@@ -1,91 +1,80 @@
 ---
 title: "The day I learned that retries are an architectural decision"
-description: "A personal look at why retrying a failed request requires limits, context, observability, and a plan for protecting the rest of the system."
+description: "Why adding a retry policy is not enough to make a service resilient, and what I now consider before retrying a failed request."
 date: 2026-08-05
 tags: ["development", "c#", "cloud", "reliability"]
 draft: false
 featured: true
 ---
 
-Retries look harmless.
+Let's be honest, retries sound like an easy win.
 
-A request fails, the application waits, and then it tries again. If the next attempt succeeds, the user may never know that anything went wrong. That makes retry policies one of the first techniques many developers—myself included—reach for when making a service more resilient.
+A request fails, we wait a little bit, try again and hopefully it works the second time. The user never notices the problem and everybody is happy. At least, that was how I looked at retry policies when I first started using them in C# services.
 
-But a retry is not just an error-handling detail. It changes the number of requests a system sends, how long work remains active, and how failures move through the services that depend on one another. In other words, it changes the architecture.
+Some years ago I even wrote about their benefits: better reliability, more availability and less manual intervention. All of that is still true, but it is only half of the story.
 
-I understood that more clearly after revisiting how I thought about retry policies in C# services. My first mental model was simple: transient failures happen, so retry the operation a few times. That model was useful, but incomplete.
+The other half is that every retry creates more work for a system that may already be having a bad day.
 
-## Situation: transient failures were only part of the story
+## Situation: the retry policy looked simple
 
-Cloud applications depend on networks, databases, APIs, queues, and services that will occasionally be slow or unavailable. A temporary network interruption or a busy database can turn an otherwise valid operation into a failure.
+Applications running in the cloud depend on many things we don't control. Networks have interruptions, databases get busy and APIs sometimes take longer than expected. We need to accept that failures will happen.
 
-The obvious response is to retry. It can improve availability and allow an application to recover without manual intervention.
+Adding a retry policy felt like the natural solution. If the problem was temporary, another attempt could be enough to recover.
 
-The problem is that the application cannot assume every failure is temporary. It also cannot assume another attempt is free.
+But what if the problem was not temporary? What if the database was overloaded or the downstream service was completely unavailable?
 
-If a downstream service is already overloaded, immediate retries send it even more traffic. One failed request can become three failed requests. Across many application instances, a small incident can become a retry storm. Meanwhile, long retry chains keep connections, memory, and processing capacity occupied.
+In that case, one request could become three requests. Now imagine that happening across multiple instances of the same application. Instead of helping the dependency recover, we could be sending even more traffic to it.
 
-The same mechanism intended to improve reliability can extend the outage.
+The code was trying to be resilient, but it could make the original problem worse.
 
-## Task: recover without making the failure worse
+## Task: recover without creating another problem
 
-My goal changed from “make failed operations retry automatically” to something more precise:
+That changed the goal for me. It was no longer just about retrying a failed operation. I needed to give temporary failures a chance to recover without putting the rest of the system at risk.
 
-> Give genuinely transient failures a controlled opportunity to recover while protecting the application, its dependencies, and its users.
+This brought up questions I had not considered at first:
 
-That definition forced me to ask questions that did not appear in the first version of the solution:
+- Which failures should we retry?
+- Is the operation safe to execute more than once?
+- How long is the user willing to wait?
+- What happens when every application instance retries at the same time?
+- Can we tell when retries are hiding a bigger issue?
 
-- Which errors are actually transient?
-- Is the operation safe to repeat?
-- How many attempts can fit inside the request's time budget?
-- What happens when many application instances retry simultaneously?
-- How will we know when retries are hiding a persistent problem?
+Once I started asking those questions, the retry policy stopped looking like a small piece of error-handling code. It became an architectural decision.
 
-Those are architectural questions, not configuration details.
+## Action: make retries part of a bigger strategy
 
-## Action: treat retries as one part of a resilience strategy
+The first lesson was simple: don't retry everything.
 
-The first improvement was to stop retrying every exception. Authentication failures, invalid input, and missing resources do not become successful because the application sends the same request again. Retrying those failures only wastes time and capacity.
+Invalid input, authentication errors and missing resources will not magically succeed on the next attempt. Retrying them only wastes time and resources. A retry should be limited to errors that have a realistic chance of being temporary.
 
-The second was to bound every retry policy. A maximum number of attempts and an overall timeout prevent work from continuing indefinitely. Exponential backoff creates progressively more space between attempts, while jitter keeps many clients from retrying at exactly the same moment.
+The second lesson was to always set limits. A policy needs a maximum number of attempts and an overall timeout. Without those limits, a request can stay alive for too long and consume connections, memory and processing capacity.
 
-The third was to pair retries with a circuit breaker. When a dependency is consistently failing, the circuit opens and calls fail quickly for a period instead of repeatedly placing more load on the unhealthy service. The application gets room to recover, and callers receive a faster, more predictable response.
+Backoff is also important. Instead of retrying immediately, the application waits longer between attempts. Adding some randomness, usually called jitter, helps prevent all instances from trying again at exactly the same time.
 
-I also learned to consider idempotency before enabling a retry. Reading the same record twice is usually harmless. Charging a card, creating an order, or publishing a message twice may not be. For operations with side effects, an idempotency key or another deduplication strategy is part of the retry design—not an optional improvement for later.
+Then comes the circuit breaker. If a dependency keeps failing, there is no reason to continue hitting it with more requests. Opening the circuit allows the application to fail fast for a period of time and gives the dependency some space to recover.
 
-Finally, retries need observability. A request that succeeds on its third attempt looks successful in a basic availability dashboard, but it may be an early warning that a dependency is degrading. Useful telemetry should distinguish first-attempt success from retry-assisted success and record details such as:
+Another detail that is easy to miss is idempotency. Reading the same record twice is normally fine. Charging a credit card, creating an order or sending a message twice is a very different story. If an operation has side effects, we need a way to prevent duplicates before we enable retries.
 
-- attempts per operation;
-- the reason an attempt was retried;
-- time spent waiting between attempts;
-- circuit-breaker state changes;
-- the dependency and operation involved;
-- the final outcome and total latency.
+Finally, we need visibility. If a request succeeds after three attempts, a basic dashboard may show it as a success. But those extra attempts could be the first sign that something is going wrong.
 
-Without that context, resilience mechanisms can mask the evidence engineers need to diagnose a problem.
+I want to know how often retries happen, why they happen, which dependency is involved and how much time they add to the request. Otherwise, the policy may hide the exact problem we need to investigate.
 
-## Result: a better definition of reliability
+## Result: I changed how I think about reliability
 
-The most valuable result was not a particular retry count or library configuration. It was a better way to reason about failure.
+The main result was not finding the perfect retry count. I don't think that number exists for every application.
 
-A reliable service is not one that keeps trying forever. It is one that knows which failures may recover, gives them a limited opportunity to do so, and stops before it harms the larger system.
-
-That mindset also changes how I review implementations. I no longer ask only, “Does this policy retry three times?” I ask:
+The real result was changing the questions I ask when I see a retry policy in a service. Now I look for these things:
 
 1. Is the operation safe to repeat?
-2. Are we retrying only failures that may be transient?
-3. Do backoff and jitter reduce synchronized load?
+2. Are we retrying only temporary failures?
+3. Do we use backoff and jitter?
 4. Is there a timeout for the complete operation?
-5. Does a circuit breaker protect the dependency during sustained failure?
-6. Can telemetry show when retries are happening and whether they help?
+5. Does a circuit breaker protect the failing dependency?
+6. Can our telemetry tell us if the retries are actually helping?
 
-If those questions do not have good answers, adding a retry may create the appearance of resilience without providing it.
+A service is not reliable because it keeps trying forever. It is reliable when it knows what can be retried, how much time it can spend and when it needs to stop.
 
-## The lesson I carry forward
+Sometimes the right decision is to retry. Other times it is better to fail fast, queue the work or ask the caller to try again later. The important part is that we make that decision on purpose.
 
-Failure is normal in distributed systems. Our response to it should be intentional.
-
-Retries can absolutely improve reliability, but only when they respect the limits of the system around them. The safest way to introduce them is to begin with the operation's semantics and failure modes, not with a convenient default copied from another service.
-
-Sometimes the correct decision is to retry. Sometimes it is to fail fast, use a fallback, queue the work, or ask the caller to try again later. Engineering judgment lies in knowing the difference.
+Retries are useful, no doubt about that. We just need to remember that they affect much more than the line of code where we configure them.
 
