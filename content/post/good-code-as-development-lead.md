@@ -17,7 +17,7 @@ My impact could not depend only on how many tickets I completed or how much code
 
 ## Situation: a promotion changed more than my title
 
-I joined Verra Mobility in January 2021 and was promoted to Development Lead a few months later. I was happy and proud about it, but the new role also made me question how I was measuring success.
+When I was promoted as tech lead a few years ago, I was happy and proud about it, but the new role also made me question how I was measuring success.
 
 As an individual contributor, I could finish my tasks and feel that I had done my job. As a lead, I could finish everything assigned to me and still fail the team if other developers were blocked, confused or depending on me for every decision.
 
@@ -45,13 +45,13 @@ This was probably the biggest change for me. Sometimes my best contribution was 
 
 One principle had already helped me as a developer: always write code like someone else will be maintaining it.
 
-As a lead, I started applying that same idea beyond the code. Could the team make the next decision without me? Did they understand why we chose this design? Was important knowledge documented or did it live only in somebody's head?
+As a lead, I started applying that same idea beyond the code. Could the team make the next decision without me? Did they understand why we chose this design? Was important knowledge documented, or did it live only in somebody's head?
 
 ### Readable code became more important
 
 Readable code is not just about style. During a production issue or an urgent change, nobody wants to spend an hour trying to understand a clever abstraction.
 
-Clear names, small responsibilities, useful tests and simple control flow help the next developer work with confidence. I still appreciate a sophisticated solution, but I appreciate one that is easy to explain even more.
+Clear names, small responsibilities, useful tests, and simple control flow help the next developer work with confidence. I still appreciate a sophisticated solution, but I appreciate one that is easy to explain even more.
 
 ### Code reviews became conversations
 
