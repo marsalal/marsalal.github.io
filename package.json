@@ -15,8 +15,8 @@
     "@astrojs/rss": "latest",
     "@astrojs/sitemap": "latest",
     "@astrojs/vue": "latest",
-    "astro": "latest",
     "@lucide/astro": "latest",
+    "astro": "^7.3.3",
     "vue": "latest"
   },
   "devDependencies": {

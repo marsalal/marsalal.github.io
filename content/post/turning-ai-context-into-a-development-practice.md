@@ -5,7 +5,7 @@ tags: ["AI", "software development", "Copilot", "development"]
 image: "/images/ai-skills-agents-avatar.jpg"
 date: 2026-09-21
 draft: false
-featured: false
+featured: true
 ---
 
 AI coding assistants are very good at producing an answer. The harder problem is getting a useful answer repeatedly, inside a real codebase, without making every developer explain the same context again.
@@ -18,7 +18,7 @@ Skills describe *how to perform a recurring kind of work*. An `AGENTS.md` file d
 
 Imagine asking an assistant to add an API endpoint. The code may compile, but it might still violate local conventions, skip tests, expose sensitive data in logs, or use a pattern the team deliberately stopped using last year.
 
-The assistant did not necessarily fail. We failed to provide durable context.
+The AI agent did not necessarily fail. We failed to provide durable context.
 
 Prompts are useful, but one-off prompts are easy to forget, hard to review, and difficult to share. A better approach is to move stable knowledge closer to the work:
 
@@ -30,7 +30,7 @@ Prompts are useful, but one-off prompts are easy to forget, hard to review, and 
 
 Think of `AGENTS.md` as a concise onboarding guide for an AI coding agent. It should answer questions such as:
 
-- What commands build, test, lint, and format the project?
+- What commands to build, test, lint, and format the project?
 - Which directories or files are generated and should not be edited directly?
 - What architectural boundaries must be preserved?
 - Which testing expectations apply to a change?
@@ -47,11 +47,11 @@ The file should contain stable, repository-wide guidance: commands, boundaries, 
 
 A skill is a reusable playbook for a class of tasks. For example:
 
-- reviewing a pull request for security risks;
-- adding a database migration;
-- instrumenting a service with telemetry;
-- creating an accessible UI component;
-- preparing a release and its changelog.
+- Reviewing a pull request for security risks;
+- Adding a database migration;
+- Instrumenting a service with telemetry;
+- Creating an accessible UI component;
+- Preparing a release and its changelog.
 
 A good skill usually contains four parts:
 
