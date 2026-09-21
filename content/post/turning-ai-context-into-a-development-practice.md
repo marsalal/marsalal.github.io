@@ -2,6 +2,7 @@
 title: "Turning AI context into a development practice with skills and AGENTS.md"
 description: "A practical, SMART approach to making GitHub Copilot and other coding agents more consistent, useful, and accountable."
 tags: ["AI", "software development", "Copilot", "development"]
+image: "/images/ai-skills-agents-avatar.jpg"
 date: 2026-09-21
 draft: false
 featured: false

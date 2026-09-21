@@ -126,6 +126,8 @@
   .post-card { overflow: hidden; border: 1px solid var(--line-strong); border-radius: var(--radius); background: rgba(11, 25, 42, .82); transition: transform .25s, border-color .25s, box-shadow .25s; }
   .post-card:hover { transform: translateY(-4px); border-color: rgba(117,224,167,.46); box-shadow: 0 22px 48px rgba(0,0,0,.22); }
   .post-art { position: relative; display: grid; min-height: 205px; place-items: center; overflow: hidden; border-bottom: 1px solid var(--line); background: radial-gradient(circle at 70% 20%, rgba(54,160,212,.16), transparent 38%), linear-gradient(145deg, #0d2636, #092119); }
+  .post-art-image { width: 100%; height: 100%; min-height: 205px; object-fit: cover; transition: transform .35s ease; }
+  .post-card:hover .post-art-image { transform: scale(1.035); }
   .art-grid { position: absolute; inset: 0; opacity: .32; background-image: linear-gradient(rgba(117,224,167,.12) 1px, transparent 1px), linear-gradient(90deg, rgba(117,224,167,.12) 1px, transparent 1px); background-size: 27px 27px; }
   .art-window { position: relative; display: flex; width: 190px; height: 116px; align-items: flex-start; gap: 6px; padding: 13px; border: 1px solid rgba(89,184,232,.55); border-radius: 10px; background: rgba(4,15,28,.72); box-shadow: 18px 18px 0 -5px rgba(16, 47, 70, .72), 34px 34px 0 -10px rgba(14, 39, 57, .55); }
   .art-window > span { width: 7px; height: 7px; border-radius: 50%; background: var(--muted-2); }
